@@ -3,13 +3,12 @@ User Defined Functions for the Valve Sizing Spreadsheet.
 Functions written by Stefan Soder
 Last Updated: 2016-07-29
 """
-from xlpython import *
 from iapws import IAPWS97
 import pandas as pd
 import math as m
 import re
 
-@xlfunc    #Written by Stefan Soder, 2018-02-02 Last UpdateL 2018-02-02
+#Written by Stefan Soder, 2018-02-02 Last UpdateL 2018-05-01
 def seatID(valvecode, valvesize, pressureclass, bonnettype):
     if valvecode == '' or None:
         return('N/A, valvecode')
@@ -47,10 +46,6 @@ def seatID(valvecode, valvesize, pressureclass, bonnettype):
             columnlocate = 'PSYGlobe'+str(pressureclass)
         elif valvecode == 28:
             columnlocate == 'PSNRGlobe' + str(pressureclass)
-            #if valvesize == 6 or valvesize == 12:
-                #columnlocate = 'PSNRGlobe'+str(pressureclass)
-            #else:
-                #columnlocate = 'PSGlobe' +str(pressureclass)
         else:
             columnlocate = 'PSGlobe'+str(pressureclass)
     elif bonnettype == bonnetverifygroups[0]:
@@ -63,7 +58,7 @@ def seatID(valvecode, valvesize, pressureclass, bonnettype):
     return(seatID)
 
 
-@xlfunc     #Written by Stefan Soder,2016-07-25 Last Update: 2016-07-29
+#Written by Stefan Soder,2016-07-25 Last Update: 2018-05-01
 def SteamType(pressure, temperature):
     
     #Convert psi to MPa; IAPWS97 object requires SI units    
@@ -99,7 +94,7 @@ def SteamType(pressure, temperature):
     
     return(fluid)
 
-@xlfunc     #Written by Stefan Soder,2016-07-25 Last Update: 2016-07-29
+#Written by Stefan Soder,2016-07-25 Last Update: 22018-05-01
 def SteamVolume(steamtype,pressure,temperature):
     #Initialize the volume variable.
     volume = 0
@@ -128,7 +123,7 @@ def SteamVolume(steamtype,pressure,temperature):
         volume = volwater.v * 16.0185
     return(volume)
     
-@xlfunc     #Written by Stefan Soder,2018-03-09 Last Update: 2018-03-12
+#Written by Stefan Soder,2018-03-09 Last Update: 2018-05-01
 def SteamRe(steamtype,pressure,temperature,SeatID,massflow):
     """This function calculates the Reynolds number of the flow through the valve
     at the Seat ID. ***NOTE*** THIS IS FOR STEAM ONLY. It calculates via converting
@@ -167,7 +162,7 @@ def SteamRe(steamtype,pressure,temperature,SeatID,massflow):
     Re = (SeatID*density*velocity)/viscosity   
     return Re
 
-@xlfunc     #Written by Stefan Soder, 2016-07-27
+#Written by Stefan Soder, 2018-05-01
 def GasVolume(molecularweight, pressure, temperature):
     #Calculates the specific volume of a gas of given molecular weight. Uses
     #the ideal gas law to do so
@@ -183,7 +178,7 @@ def GasVolume(molecularweight, pressure, temperature):
     specificvolume = ((temperature*relativeR)/(144*pressure))
     return(specificvolume)
     
-@xlfunc     #Written by Stefan Soder, 2016-07-29
+#Written by Stefan Soder, 2018-05-01
 def scfdConversion (scfd, pressure, temperature):
     #converts SCFD to gpm
     standardtemp = 519.67
